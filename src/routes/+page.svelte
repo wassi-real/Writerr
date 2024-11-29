@@ -90,15 +90,15 @@
     width: 2.5rem;
     height: 2.5rem;
     background-color: var(--color-bg-secondary);
-    border-radius: 50%;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .image {
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
   }
 
   .avatar span {
