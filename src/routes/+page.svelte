@@ -27,7 +27,7 @@
   <header>
     <div class="header-left">
       <div class="avatar">
-        <img alt="The Writerr logo" src={favicon} />
+        <img alt="The Writerr logo" class="image" src={favicon} />
       </div>
       <h1>Writerr (Beta Version)</h1>
     </div>
@@ -94,6 +94,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .image {
+    height: 25px;
+    width: 25px;
   }
 
   .avatar span {
