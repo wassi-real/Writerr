@@ -6,7 +6,7 @@
   import CreateBookModal from '$lib/components/CreateBookModal.svelte';
   import CreateChapterModal from '$lib/components/CreateChapterModal.svelte';
   import SettingsModal from '$lib/components/SettingsModal.svelte'; // Import new SettingsModal
-  import { books } from '$lib/stores/bookStore.js';
+  import { books } from '$lib/stores/bookstore.js';
 
   let showBookModal = false;
   let showChapterModal = false;
