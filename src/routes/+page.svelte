@@ -7,6 +7,7 @@
   import CreateChapterModal from '$lib/components/CreateChapterModal.svelte';
   import SettingsModal from '$lib/components/SettingsModal.svelte'; // Import new SettingsModal
   import { books } from '$lib/stores/bookStore';
+  import favicon from '$lib/assets/favicon.png';
 
   let showBookModal = false;
   let showChapterModal = false;
@@ -26,7 +27,7 @@
   <header>
     <div class="header-left">
       <div class="avatar">
-        <span>SW</span>
+        <img alt="The Writerr logo" src={favicon} />
       </div>
       <h1>Writerr (Beta Version)</h1>
     </div>
