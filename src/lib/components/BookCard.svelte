@@ -7,7 +7,7 @@
 <!-- svelte-ignore a11y_static_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="book-card" on:click={() => goto(`/write/${book.id}`)}>
+<div class="book-card" on:click={() => goto(`dashboard/write/${book.id}`)}>
   <h2>{book.title}</h2>
   <p class="author">by {book.author}</p>
   <p class="description">{book.description}</p>

@@ -1,17 +1,27 @@
 <script>
     import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
     import { books } from '$lib/stores/bookStore';
     import JSZip from 'jszip';
     import FileSaver from 'file-saver';
 
     export let show = false; // Controls modal visibility
     let theme = 'dark'; // Default theme is dark
+    let userInfoVisible = false; // Toggles user information visibility
+    let username = '';
 
+    // Load data on mount
     onMount(() => {
         // Load saved theme preference
         const savedTheme = localStorage.getItem('theme') || 'dark';
         theme = savedTheme;
         applyTheme(theme);
+
+        // Get user data
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+            username = storedUser.username;
+        }
     });
 
     function applyTheme(selectedTheme) {
@@ -45,9 +55,47 @@
         }
     }
 
+    function logOut() {
+        if (confirm('Are you sure you want to log out? This will permanently delete the Account and Books')) {
+            books.set([]);
+            localStorage.removeItem('books');
+            localStorage.removeItem('user'); // Clear user data
+            goto('/'); // Redirect to login
+        }
+    }
+
+    // function deleteAccount() {
+    //     if (confirm('Are you sure you want to delete your account? This will remove all data permanently.')) {
+    //         books.set([]); // Clear books
+    //         localStorage.removeItem('books'); // Remove books from storage
+    //         localStorage.removeItem('user'); // Remove user data
+    //         goto('/login'); // Redirect to login
+    //     }
+    // }
+
     function handleClose() {
         show = false;
     }
+
+
+
+    let currentTime;
+    // Function to get the current time
+    const updateTime = () => {
+    currentTime = new Date().toLocaleTimeString();
+    };
+
+    onMount(() => {
+    updateTime(); // Set the initial time
+    const interval = setInterval(updateTime, 1000); // Update every second
+
+    return () => clearInterval(interval); // Cleanup on component destroy
+    });
+
+
+    
+
+
 </script>
 
 {#if show}
@@ -59,21 +107,49 @@
     <div class="modal" 
     on:click|stopPropagation>
         <h2>Settings</h2>
-        <div class="form-group">
+        <p>Privately Logged in as, {username}</p>
+        <p class="op">Time: {currentTime}</p>        
+        <!-- Theme Selection -->
+        <!-- <div class="form-group">
             <label for="theme">Theme</label>
             <select id="theme" bind:value={theme} on:change={handleThemeChange}>
                 <option value="dark">Dark</option>
                 <option value="light">Light</option>
             </select>
-        </div>
+        </div> -->
+        
+        <!-- User Information Toggle -->
+        <!-- <div>
+            <button class="btn btn-secondary" on:click={() => userInfoVisible = !userInfoVisible}>
+                {userInfoVisible ? 'Hide User Info' : 'Show User Info'}
+            </button>
+            {#if userInfoVisible}
+                <div class="user-info">
+                    <p><strong>Username:</strong> {username}</p>
+                    <p><strong>Books:</strong> {bookCount}</p>
+                    <button class="btn btn-danger" on:click={deleteAccount}>
+                        Delete Account
+                    </button>
+                </div>
+            {/if}
+        </div> -->
+
+        <!-- Export and Delete Data Buttons -->
         <div class="button-group">
             <button class="btn btn-secondary" on:click={exportAllData}>
-                Export All Data
+                Export All Books
             </button>
             <button class="btn btn-danger" on:click={deleteAllData}>
-                Delete All Data
+                Delete All Books
             </button>
         </div>
+
+        <!-- Log Out -->
+        <button class="btn btn-secondary opal" on:click={logOut}>
+            Log Out & Remove Account
+        </button>
+
+        <!-- Close Modal -->
         <button class="close-button" on:click={handleClose}>&times;</button>
     </div>
 </div>
@@ -109,6 +185,9 @@
         --color-border: var(--color-border-light);
     }
 
+    .op {
+        margin-bottom: 1.5rem;
+    }
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -142,7 +221,10 @@
 
     h2 {
         font-size: 1.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.9rem;
+    }
+    p {
+        margin-bottom: 0.4rem;
     }
 
     .form-group {
@@ -199,10 +281,25 @@
         color: var(--color-text);
         border: 1px solid var(--color-border);
     }
+    .opal {
+        margin-top: 15px;
+    }
 
     .btn-danger {
         background-color: #dc3545;
         color: white;
         border: none;
     }
+    /* .user-info {
+        margin-top: 1rem;
+        background-color: var(--color-bg);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+    }
+
+    .user-info p {
+        margin: 0.5rem 0;
+    } */
 </style>
