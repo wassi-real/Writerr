@@ -19,7 +19,7 @@
       <!-- Feedback Form -->
       <div class="bg-neutral-800 rounded-lg shadow-lg p-8 sm:p-12 max-w-4xl mx-auto">
         <form class="space-y-6" action="https://formsubmit.co/b7193db00a902acc4a9f843b27b8ed48" method="POST" id="contactForm">
-        <input type="hidden" name="_next" value="http://localhost:5173/thanks">
+        <input type="hidden" name="_next" value="http://writerr.softodesign.com/thanks">
         <input type="hidden" name="_captcha" value="false">
           <!-- Name -->
           <div>
